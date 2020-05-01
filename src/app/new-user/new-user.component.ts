@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { userDataModel } from '../../models/userDataModel';
+import { UserDataModel } from '../../models/userDataModel';
 import { Roles, Customers } from '../../models/enum';
 import { DataService } from '../data.service';
 import { NgForm } from '@angular/forms';
@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
 
 export class NewUserComponent implements OnInit {
   newUserTable: boolean;
-  model: userDataModel;
+  model: UserDataModel;
   showError: boolean;
   roles: string[] = [];
   customers: string[] = [];
@@ -21,7 +21,7 @@ export class NewUserComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.model = new userDataModel();
+    this.model = new UserDataModel();
 
     for(let i in Roles) {
       if (!isNaN(Number(i))) {
@@ -45,7 +45,6 @@ export class NewUserComponent implements OnInit {
     if(newUserForm.invalid) {
       this.showError = true;
     } else {
-      console.log("Valid");
       if(!this.model.middlename || this.model.middlename.trim().length == 0){
         this.model.middlename = "";
       } 
@@ -57,11 +56,12 @@ export class NewUserComponent implements OnInit {
 
       this.dataService.create(this.model)
       .subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error),
         () => {
           newUserForm.reset();
           this.newUserTable = false;
+        },
+        (error) => {
+          window.alert(error);
         }
       );
     }

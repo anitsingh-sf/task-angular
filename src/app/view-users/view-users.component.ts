@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Roles, Customers } from '../../models/enum';
-import { userDataModel } from '../../models/userDataModel';
+import { UserDataModel } from '../../models/userDataModel';
 import { DataService } from '../data.service';
 import * as cloneDeep from 'lodash/cloneDeep';
 
@@ -14,9 +14,9 @@ export class ViewUsersComponent implements OnInit {
   dataViewable: boolean;
   mainButtonText: string;
   columns: string[];
-  userData: userDataModel[] = [];
-  beforeEditUserData: userDataModel[] = [];
-  updatedUserData: userDataModel;
+  userData: UserDataModel[] = [];
+  beforeEditUserData: UserDataModel[] = [];
+  updatedUserData: UserDataModel;
   showError: boolean[] = [];
   editable: boolean[] = [];
   roles: string[] = [];
@@ -55,7 +55,7 @@ export class ViewUsersComponent implements OnInit {
       this.beforeEditUserData = cloneDeep(response);
     },
     error => {
-      console.log("Error ", error);
+      window.alert(error);
     },
     () => {
       for(let i in this.userData) {
@@ -78,11 +78,10 @@ export class ViewUsersComponent implements OnInit {
   delete(rowNum: number, button: HTMLTableCellElement) {
     if(this.buttonValues[rowNum][1] == "Delete") {
       this.dataService.delete(this.userData[rowNum].index)
-      .subscribe(response => {
-          console.log(response);
+      .subscribe(() => {
         },
         error => {
-          console.log(error)
+          window.alert(error)
         },
         () => {
           this.userData.splice(rowNum, 1);
@@ -106,7 +105,7 @@ export class ViewUsersComponent implements OnInit {
     } else {
       this.dataService.update(this.userData[rowNum])
       .subscribe( response => {},
-        error => {console.log(error)},
+        error => { window.alert(error) },
         () => {
           this.buttonValues[rowNum] = ["Edit", "Delete"];
           this.editable[rowNum] = false;

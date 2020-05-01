@@ -3,30 +3,35 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
+    url: string = 'http://localhost:5000';
     constructor(private httpClient: HttpClient) {
     }
 
     create(newUserData) {
         return this.httpClient.request<any>("post", 
-            "http://localhost:5000/api/addUser", 
-            { body: newUserData });
+            this.url + "/api/addUser", 
+            { 
+                body: { 'newUserData': newUserData } 
+            });
     }
 
     read() {
-        return this.httpClient.get<any>("http://localhost:5000/api/getData");
+        return this.httpClient.get<any>(this.url + "/api/getUsers");
     }
 
     update(updatedUserData) {
         return this.httpClient.request<any>("post",     
-            "http://localhost:5000/api/updateUser", 
-            { body: updatedUserData });
+            this.url + "/api/updateUser", 
+            {
+                body: {'updatedUserData': updatedUserData }
+            });
     }
 
     delete(index) {
         return this.httpClient.request<any>("delete", 
-            "http://localhost:5000/api/delUser", 
-            { body: 
-                { "index": index }
+            this.url + "/api/deleteUser", 
+            { 
+                body: { "index": index }
             });
     }
 }
