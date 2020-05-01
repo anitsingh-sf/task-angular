@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserDataModel } from 'src/models/userDataModel';
 import { Subject } from 'rxjs';
 
 @Component({
