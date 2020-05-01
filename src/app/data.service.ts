@@ -1,37 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserDataModel } from 'src/models/userDataModel';
 
 @Injectable()
 export class DataService {
-    url: string = 'http://localhost:5000';
+    url: string = 'http://localhost:3000';
     constructor(private httpClient: HttpClient) {
     }
 
-    create(newUserData) {
-        return this.httpClient.request<any>("post", 
-            this.url + "/api/addUser", 
-            { 
-                body: { 'newUserData': newUserData } 
-            });
+    create(newUserData: UserDataModel) {
+        return this.httpClient.post(this.url + "/users", newUserData);
     }
 
     read() {
-        return this.httpClient.get<any>(this.url + "/api/getUsers");
+        return this.httpClient.get<any>(this.url + "/users");
     }
 
-    update(updatedUserData) {
-        return this.httpClient.request<any>("post",     
-            this.url + "/api/updateUser", 
+    update(updatedUserData: UserDataModel) {
+        return this.httpClient.request<any>("put",     
+            this.url + "/users/" + updatedUserData.index, 
             {
-                body: {'updatedUserData': updatedUserData }
+                body: updatedUserData 
             });
     }
 
-    delete(index) {
-        return this.httpClient.request<any>("delete", 
-            this.url + "/api/deleteUser", 
-            { 
-                body: { "index": index }
-            });
+    delete(index: number) {
+        return this.httpClient.delete<any>(this.url + "/users/" + index);
     }
 }

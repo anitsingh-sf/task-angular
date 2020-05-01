@@ -1,2 +1,2 @@
-<app-view-users></app-view-users>
-<app-new-user></app-new-user>
+<app-view-users [newUserAddedEvent]="newUserData.asObservable()"></app-view-users>
+<app-new-user (newUserAddedEvent)="receiveNewUserData()"></app-new-user>

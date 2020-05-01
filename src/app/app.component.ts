@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserDataModel } from 'src/models/userDataModel';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-app';
+  newUserData: Subject<void> = new Subject();
+
+  constructor() {}
+
+  receiveNewUserData() {
+    this.newUserData.next();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserDataModel } from '../../models/userDataModel';
 import { Roles, Customers } from '../../models/enum';
 import { DataService } from '../data.service';
@@ -17,6 +17,8 @@ export class NewUserComponent implements OnInit {
   showError: boolean;
   roles: string[] = [];
   customers: string[] = [];
+
+  @Output() newUserAddedEvent = new EventEmitter<void>();
 
   constructor(private dataService: DataService) { }
 
@@ -57,6 +59,7 @@ export class NewUserComponent implements OnInit {
       this.dataService.create(this.model)
       .subscribe(
         () => {
+          this.newUserAddedEvent.emit();
           newUserForm.reset();
           this.newUserTable = false;
         },

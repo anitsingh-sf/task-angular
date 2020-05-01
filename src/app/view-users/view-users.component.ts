@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Roles, Customers } from '../../models/enum';
 import { UserDataModel } from '../../models/userDataModel';
 import { DataService } from '../data.service';
 import * as cloneDeep from 'lodash/cloneDeep';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-view-users',
@@ -16,12 +17,14 @@ export class ViewUsersComponent implements OnInit {
   columns: string[];
   userData: UserDataModel[] = [];
   beforeEditUserData: UserDataModel[] = [];
-  updatedUserData: UserDataModel;
   showError: boolean[] = [];
   editable: boolean[] = [];
   roles: string[] = [];
   customers: string[] = [];
   buttonValues: string[][] = [];
+
+  newUserSubscription: Subscription;
+  @Input() newUserAddedEvent: Observable<void>;
 
   Roles = Roles;
   Customers = Customers;
@@ -44,6 +47,10 @@ export class ViewUsersComponent implements OnInit {
         this.customers.push(Customers[i]);
       }
     }
+
+    this.newUserSubscription = this.newUserAddedEvent.subscribe( () => {
+      this.load();
+    })
   }
 
   load() {
@@ -103,9 +110,15 @@ export class ViewUsersComponent implements OnInit {
       !this.userData[rowNum].phone.match(/^((\\+91-?)|0)?[0-9]{10}$/)) {
         this.showError[rowNum] = true;
     } else {
-      this.dataService.update(this.userData[rowNum])
+      let updatedUserData: UserDataModel = this.userData[rowNum];
+      if(updatedUserData.middlename == null) updatedUserData.middlename = '';
+      if(updatedUserData.address == null) updatedUserData.address = '';
+      this.dataService.update(updatedUserData)
       .subscribe( response => {},
-        error => { window.alert(error.statusText) },
+        error => { 
+          console.log(error);  
+          window.alert(error.statusText) 
+        },
         () => {
           this.buttonValues[rowNum] = ["Edit", "Delete"];
           this.editable[rowNum] = false;

@@ -7,5 +7,5 @@ export class UserDataModel {
     role: number;
     customer: number;
     address: string;
-    index: string;
+    index: number;
 }
