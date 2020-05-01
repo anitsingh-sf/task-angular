@@ -55,7 +55,7 @@ export class ViewUsersComponent implements OnInit {
       this.beforeEditUserData = cloneDeep(response);
     },
     error => {
-      window.alert(error);
+      window.alert(error.statusText);
     },
     () => {
       for(let i in this.userData) {
@@ -81,7 +81,7 @@ export class ViewUsersComponent implements OnInit {
       .subscribe(() => {
         },
         error => {
-          window.alert(error)
+          window.alert(error.statusText);
         },
         () => {
           this.userData.splice(rowNum, 1);
@@ -105,7 +105,7 @@ export class ViewUsersComponent implements OnInit {
     } else {
       this.dataService.update(this.userData[rowNum])
       .subscribe( response => {},
-        error => { window.alert(error) },
+        error => { window.alert(error.statusText) },
         () => {
           this.buttonValues[rowNum] = ["Edit", "Delete"];
           this.editable[rowNum] = false;

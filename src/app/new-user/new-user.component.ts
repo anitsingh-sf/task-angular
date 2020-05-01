@@ -61,7 +61,7 @@ export class NewUserComponent implements OnInit {
           this.newUserTable = false;
         },
         (error) => {
-          window.alert(error);
+          window.alert(error.statusText);
         }
       );
     }
