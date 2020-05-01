@@ -1,0 +1,160 @@
+<div>
+    <button 
+        type="button"
+        class="btn btn-primary" 
+        (click)="load()"> {{ mainButtonText }} </button>
+
+    <div *ngIf="dataViewable">
+        <table class="table table-bordered" id="dataTable">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of columns">{{ column }}</th>
+                </tr>
+            </thead>
+        
+            <tbody id="tableBody">
+                <tr *ngFor="let user of userData; index as rowNum">
+                    <td><input type="text"
+                        class="tableTextBox"
+                        name="firstname"
+                        required
+                        [readonly]="!editable[rowNum]"
+                        [(ngModel)]="userData[rowNum].firstname"
+                        #firstname="ngModel">
+                        
+                        <div *ngIf="showError[rowNum] && firstname.invalid"
+                            class="alert alert-danger">
+                            <div *ngIf="firstname.errors.required">
+                                First Name is required.
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text"
+                        class="tableTextBox"
+                        name="middlename"
+                        [readonly]="!editable[rowNum]"
+                        [(ngModel)]="userData[rowNum].middlename"
+                        #middlename="ngModel">
+                    </td>
+                    <td><input type="text"
+                        class="tableTextBox"
+                        name="lastname"
+                        required
+                        [readonly]="!editable[rowNum]"
+                        [(ngModel)]="userData[rowNum].lastname"
+                        #lastname="ngModel">
+
+                        <div *ngIf="showError[rowNum] && lastname.invalid"
+                            class="alert alert-danger">
+                            <div *ngIf="lastname.errors.required">
+                                Last Name is required.
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text"
+                        class="tableTextBox"
+                        name="email"
+                        required
+                        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                        [readonly]="!editable[rowNum]"
+                        [(ngModel)]="userData[rowNum].email"
+                        #email="ngModel">
+
+                        <div *ngIf="showError[rowNum] && email.invalid"
+                            class="alert alert-danger">
+                            <div *ngIf="email.errors.required">
+                                Email is required.
+                            </div>
+                            <div *ngIf="email.errors.pattern">
+                                Email is invalid.
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text"
+                        class="tableTextBox"
+                        name="phone"
+                        required
+                        pattern="^((\\+91-?)|0)?[0-9]{10}$"
+                        [readonly]="!editable[rowNum]"
+                        [(ngModel)]="userData[rowNum].phone"
+                        #phone="ngModel">
+
+                        <div *ngIf="showError[rowNum] && phone.invalid"
+                            class="alert alert-danger">
+                            <div *ngIf="phone.errors.required">
+                                Phone Number is required.
+                            </div>
+                            <div *ngIf="phone.errors.pattern">
+                                Phone Number is invalid.
+                            </div>
+                        </div>
+                    </td>
+
+                    <td><div *ngIf="editable[rowNum]; else showOnlyRoleValue">
+                            <select name="role"
+                                required
+                                (change)="changeRole(rowNum, $event.target)"
+                                #role>
+                                <option *ngFor="let role of roles; index as i"
+                                    [attr.value]="i" 
+                                    [attr.selected]="i == userData[rowNum].role ? true : null"> {{ role }}</option>
+                            </select>
+
+                            <div *ngIf="showError[rowNum] && role.invalid"
+                                class="alert alert-danger">
+                                Role is required.
+                            </div>
+                        </div>
+
+                        <ng-template #showOnlyRoleValue>
+                            <input type="text"
+                                class="tableTextBox"
+                                readonly
+                                [value]="Roles[+user.role]">
+                        </ng-template>  
+                    </td>
+
+                    <td><div *ngIf="editable[rowNum]; else showOnlyCustomerValue">
+                            <select name="customer"
+                                required
+                                (change)="changeCustomer(rowNum, $event.target)"
+                                #customer>
+                                <option *ngFor="let customer of customers; index as i"
+                                    [attr.value]="i" 
+                                    [attr.selected]="i == userData[rowNum].customer ? true : null"> {{ customer }}</option>
+                            </select>
+
+                            <div *ngIf="showError[rowNum] && customer.invalid"
+                                class="alert alert-danger">
+                                Customer is required.
+                            </div>
+                        </div>
+
+                        <ng-template #showOnlyCustomerValue>
+                            {{ Customers[+user.customer] }}
+                        </ng-template>    
+                    </td>
+                    
+
+                    <td><input type="text"
+                        class="tableTextBox"
+                        name="address"
+                        [readonly]="!editable[rowNum]"
+                        [(ngModel)]="userData[rowNum].address"
+                        #address="ngModel">
+                    </td>
+                    <td><input type="button"
+                        class="btn btn-primary"
+                        (click)="edit(rowNum, $event.target)"
+                        [value]=buttonValues[rowNum][0]>
+                    </td>
+                    <td><input type="button"
+                        class="btn btn-danger"
+                        (click)="delete(rowNum, $event.target)"
+                        [value]=buttonValues[rowNum][1]>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
+    </div>
+</div>
