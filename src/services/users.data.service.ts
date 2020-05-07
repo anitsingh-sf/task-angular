@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserDataModel } from 'src/models/userDataModel';
 
 @Injectable()
-export class DataService {
+export class UserDataService {
     url: string = 'http://localhost:3000';
     constructor(private httpClient: HttpClient) {
     }
@@ -17,14 +17,14 @@ export class DataService {
     }
 
     update(updatedUserData: UserDataModel) {
-        return this.httpClient.request<any>("put",     
-            this.url + "/users/" + updatedUserData.index, 
-            {
-                body: updatedUserData 
-            });
+        return this.httpClient.put(this.url + "/users/" + updatedUserData.index, updatedUserData);
     }
 
     delete(index: number) {
         return this.httpClient.delete<any>(this.url + "/users/" + index);
+    }
+
+    getUsers(customerName: string) {
+        return this.httpClient.get<any>(this.url + "/users/" + customerName);
     }
 }

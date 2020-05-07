@@ -1,0 +1,70 @@
+<div>
+    <button type="button" class="btn btn-primary" (click)="load()"> {{ mainButtonText }} </button>
+
+    <div *ngIf="dataViewable">
+        <table class="table table-bordered" id="dataTable">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of columns">{{ column }}</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody">
+                <tr *ngFor="let customer of customerData; index as rowNum">
+                    <td>
+                        <input type="text" class="tableTextBox" name="customer" required [readonly]="!editable[rowNum]"
+                            [(ngModel)]="customerData[rowNum].customer" #customer="ngModel">
+
+                        <div *ngIf="showError[rowNum] && customer.invalid" class="alert alert-danger">
+                            <div *ngIf="customer.errors.required">
+                                Customer Name is required.
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <input type="text" class="tableTextBox" name="website" required [readonly]="!editable[rowNum]"
+                            [(ngModel)]="customerData[rowNum].website" #website="ngModel">
+
+                        <div *ngIf="showError[rowNum] && website.invalid" class="alert alert-danger">
+                            <div *ngIf="website.errors.required">
+                                Website is required.
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <input type="text" class="tableTextBox" name="address" required [readonly]="!editable[rowNum]"
+                            [(ngModel)]="customerData[rowNum].address" #address="ngModel">
+
+                        <div *ngIf="showError[rowNum] && address.invalid" class="alert alert-danger">
+                            <div *ngIf="address.errors.required">
+                                Address is required.
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <input type="button" class="btn btn-primary" (click)="edit(rowNum)"
+                            [value]=buttonValues[rowNum][0]>
+                    </td>
+
+                    <td>
+                        <input type="button" class="btn btn-danger" (click)="delete(rowNum)"
+                            [value]=buttonValues[rowNum][1]>
+                    </td>
+
+                    <td>
+                        <input type="button" class="btn btn-primary" (click)="viewUsers(rowNum)"
+                            [value]=buttonValues[rowNum][2]>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <div *ngIf=customerUsersVisible>
+            <app-view-customer-users [customerName]="customerWhoseUsers.asObservable()"></app-view-customer-users>
+        </div>
+    </div>
+</div>

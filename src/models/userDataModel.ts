@@ -4,8 +4,8 @@ export class UserDataModel {
     lastname: string;
     email: string;
     phone: string;
-    role: number;
-    customer: number;
+    role: string;
+    customer: string;
     address: string;
     index: number;
 }

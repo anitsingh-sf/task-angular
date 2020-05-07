@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +6,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  newUserData: Subject<void> = new Subject();
+  title = 'my-app';
 
-  constructor() {}
-
-  receiveNewUserData() {
-    this.newUserData.next();
-  }
+  constructor() { }
 }

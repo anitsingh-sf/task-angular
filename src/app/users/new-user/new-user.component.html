@@ -1,8 +1,6 @@
-<button type="submit" 
-    class="btn btn-primary" 
-    id="newEntryButton" 
-    (click)="createNewUser()">Create new user
+<button type="submit" class="btn btn-primary" id="newEntryButton" (click)="createNewUser()">Create new user
 </button>
+
 <div *ngIf="newUserTable">
     <div class="container">
         <form #newUserForm="ngForm">
@@ -10,15 +8,10 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="firstname">First Name</label>
-                        <input type="text"
-                            class="form-control"
-                            name="firstname"
-                            required
-                            [(ngModel)]="model.firstname"
+                        <input type="text" class="form-control" name="firstname" required [(ngModel)]="model.firstname"
                             #firstname="ngModel">
 
-                        <div *ngIf="showError && firstname.invalid"
-                            class="alert alert-danger">
+                        <div *ngIf="showError && firstname.invalid" class="alert alert-danger">
                             <div *ngIf="firstname.errors.required">
                                 First Name is required.
                             </div>
@@ -27,24 +20,16 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="middlename">Middle Name</label>
-                        <input type="text"
-                            class="form-control"
-                            name="middlename"
-                            [(ngModel)]="model.middlename"
+                        <input type="text" class="form-control" name="middlename" [(ngModel)]="model.middlename"
                             #middlename="ngModel">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="lastname">Last Name</label>
-                        <input type="text"
-                            class="form-control"
-                            name="lastname"
-                            required
-                            [(ngModel)]="model.lastname"
+                        <input type="text" class="form-control" name="lastname" required [(ngModel)]="model.lastname"
                             #lastname="ngModel">
 
-                        <div *ngIf="showError && lastname.invalid"
-                            class="alert alert-danger">
+                        <div *ngIf="showError && lastname.invalid" class="alert alert-danger">
                             <div *ngIf="lastname.errors.required">
                                 Last Name is required.
                             </div>
@@ -55,16 +40,10 @@
                 <div class="form-row">
                     <div class="col-md-8 mb-6">
                         <label for="email">E-Mail</label>
-                        <input type="text"
-                            class="form-control"
-                            name="email"
-                            required
-                            email
-                            [(ngModel)]="model.email"
+                        <input type="text" class="form-control" name="email" required email [(ngModel)]="model.email"
                             #email="ngModel">
 
-                        <div *ngIf="showError && email.invalid"
-                            class="alert alert-danger">
+                        <div *ngIf="showError && email.invalid" class="alert alert-danger">
                             <div *ngIf="email.errors.required">
                                 Email is required.
                             </div>
@@ -76,16 +55,10 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="phone">Phone Number</label>
-                        <input type="text"
-                            class="form-control"
-                            name="phone"
-                            required
-                            pattern="^((\\+91-?)|0)?[0-9]{10}$"
-                            [(ngModel)]="model.phone"
-                            #phone="ngModel">
+                        <input type="text" class="form-control" name="phone" required
+                            pattern="^((\\+91-?)|0)?[0-9]{10}$" [(ngModel)]="model.phone" #phone="ngModel">
 
-                        <div *ngIf="showError && phone.invalid"
-                            class="alert alert-danger">
+                        <div *ngIf="showError && phone.invalid" class="alert alert-danger">
                             <div *ngIf="phone.errors.required">
                                 Phone Number is required.
                             </div>
@@ -99,53 +72,35 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="role">Role</label>
-                        <select class="form-control"
-                            name="role"
-                            [(ngModel)]="model.role"
-                            required
-                            #role="ngModel">
+                        <select class="form-control" name="role" [(ngModel)]="model.role" required #role="ngModel">
                             <option *ngFor="let role of roles"> {{ role }}</option>
                         </select>
 
-                        <div *ngIf="showError && role.invalid"
-                            class="alert alert-danger">
+                        <div *ngIf="showError && role.invalid" class="alert alert-danger">
                             Role is required.
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="customer">Customer</label>
-                        <select class="form-control"
-                            name="customer"
-                            [(ngModel)]="model.customer"
-                            required
+                        <select class="form-control" name="customer" [(ngModel)]="model.customer" required
                             #customer="ngModel">
                             <option *ngFor="let customer of customers"> {{ customer }}</option>
                         </select>
 
-                        <div *ngIf="showError && customer.invalid"
-                            class="alert alert-danger">
+                        <div *ngIf="showError && customer.invalid" class="alert alert-danger">
                             Customer is required.
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="address">Address</label>
-                        <input type="text"
-                            class="form-control"
-                            name="address"
-                            [(ngModel)]="model.address">
+                        <input type="text" class="form-control" name="address" [(ngModel)]="model.address">
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <input type="button"
-                        class="btn btn-primary"
-                        (click)="save(newUserForm)"
-                        value="Save">
-    
-                    <input type="button"
-                        class="btn btn-danger"
-                        (click)="cancel(newUserForm)"
-                        value="Cancel">
+                    <input type="button" class="btn btn-primary" (click)="save(newUserForm)" value="Save">
+
+                    <input type="button" class="btn btn-danger" (click)="cancel(newUserForm)" value="Cancel">
                 </div>
             </div>
         </form>
